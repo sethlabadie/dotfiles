@@ -1,0 +1,69 @@
+# Project Direnv Configuration
+# This file is sourced by direnv before any other shell commands.
+# It is used to set up the environment for the current project.
+# It is also used to reset the environment when leaving the project.
+
+# set -x  # Enable debugging
+
+export DIRENV_LOG_FORMAT=""
+# quiet
+
+# Create and use Python virtual environment
+# layout python python3 > /dev/null 2>&1
+
+# Python Virtual Environment Management
+layout uv  # Ensure this function is defined in your direnv configuration
+
+# Load environment variables from .env file if it exists
+# Uncomment this block if you want to load environment variables from a .env file. Will not load if .env file is not present.
+if [ -f .env ]; then
+    dotenv > /dev/null 2>&1
+fi
+
+# Project-specific environment variables
+export PROJECT_NAME="${PROJECT_NAME:-}"
+# export ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-}"
+export OPENAI_API_KEY="${OPENAI_API_KEY:-}"
+export GITHUB_TOKEN="${GITHUB_TOKEN:-}"
+export WAKATIME_TOKEN="${WAKATIME_TOKEN:-}"
+# export DATABASE_URL="postgresql://localhost/mydb"
+export EDITOR=nvim
+export VISUAL=nvim
+
+# Development mode flag
+export DEV_MODE=1
+
+# Silence any remaining output
+: > /dev/null 2>&1
+
+# Colorize terminal output
+export TERM=xterm-256color
+
+# Improve history
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTFILE="$HOME/.zsh_history"
+
+# Improve Python environment
+export PYTHONBREAKPOINT=ipdb.set_trace
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONUNBUFFERED=1
+
+# Path modifications
+PATH_add bin
+PATH_add scripts
+PATH_add .venv/bin
+
+# Allow local overrides
+# [ -f .envrc.local ] && source .envrc.local # Throws an error when opening a new terminal or `direnv reload`. Replaced with below text.
+if [ -f .envrc.local ]; then
+  source .envrc.local || echo "Warning: .envrc.local failed to load"
+fi
+
+# Cleanup function to reset environment
+if [[ -n "$DIRENV_IN_ENVRC" ]]; then
+    # This ensures clean environment when leaving project
+    unset ANTHROPIC_API_KEY
+    unset OPENAI_API_KEY
+    unset GITHUB_TOKEN
+fi

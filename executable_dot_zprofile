@@ -1,0 +1,23 @@
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/.local/share/amazon-q/shell/zprofile.pre.zsh" ]] && builtin source "${HOME}/.local/share/amazon-q/shell/zprofile.pre.zsh"
+#
+# ~/.zprofile is run for login shells
+#
+
+###########################
+## Environment Variables ##
+###########################
+
+#export XDG_CONFIG_HOME="~/.config"
+#export $XDG_DATA_HOME="~/.local/share"
+export PATH=$PATH:$HOME/.local/bin
+
+
+#######################
+## Application Calls ##
+#######################
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/.local/share/amazon-q/shell/zprofile.post.zsh" ]] && builtin source "${HOME}/.local/share/amazon-q/shell/zprofile.post.zsh"

@@ -1,0 +1,60 @@
+# ~/.zshenv: user-specific .zshenv file for zsh(1).
+#
+# This file is sourced on all invocations of the shell.
+#
+# This file should contain commands to set the command
+# search path, plus other important environment variables.
+# This file should not contain commands that produce
+# output or assume the shell is attached to a tty.
+#
+# Global Order: zshenv, zprofile, zshrc, zlogin
+#
+# to see the PATH variable, run: echo $PATH | tr ":" "\n" | nl
+
+
+########################
+## Path Configuration ##
+########################
+
+# export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH" # In the function below
+# export PATH="$HOME/.local/bin:$PATH" # In the function below
+
+# User-specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:/usr/local/bin:" ]]; then
+    PATH="$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH"
+fi
+export PATH
+
+# export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH" # already set in .zshrc
+# export PATH="/home/linuxbrew/.linuxbrew/lib/ruby/gems/3.4.0/bin:$PATH"
+
+export PATH="$HOME/.gems/bin:$PATH"
+
+###########################
+## Environment Variables ##
+###########################
+
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME="$HOME/.local/share" # 
+export XDG_BIN_HOME="$HOME/.local/bin" # 
+export XDG_LIB_HOME="$HOME/.local/lib" # 
+# export XDG_CACHE_HOME="$HOME/.local/var/cache" #  
+
+# export GITSTATUS_CACHE_DIR="$HOME/.local/var/cache/gitstatus"
+export MANPATH="/usr/local/man:$MANPATH" # part of oh-my-zsh; moved here to be consistent
+export ARCHFLAGS="-arch $(uname -m)" # part of oh-my-zsh; moved here to be consistent
+export ZSH="$HOME/.oh-my-zsh"
+# export GEM_HOME="$(brew --prefix)"
+export GEM_HOME="$HOME/.gems"
+if command -v brew >/dev/null 2>&1; then
+    export LDFLAGS="-L$(brew --prefix)/lib"
+    export CPPFLAGS="-I$(brew --prefix)/include"
+    export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig"
+fi
+
+# Use system GCC instead of Homebrew GCC; Homebrew's GCC may not be fully compatible with the system's glibc.
+# This is a known issue on recent versions of glibc (used by Fedora 39/40/41/42) and affects Ruby 3.4.x
+# (and sometimes 3.3.x) when building with Homebrew GCC and libraries. The Ruby build system is not yet fully
+# compatible with the new pthread symbols introduced in glibc 2.34+.
+export CC=/usr/bin/gcc
+export CXX=/usr/bin/g++

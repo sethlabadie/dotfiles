@@ -1,0 +1,105 @@
+# Global direnv configuration
+
+
+# Simple logging functions for shell compatibility
+log_status() {
+  echo "$@"
+}
+log_error() {
+  echo "ERROR: $@" >&2
+}
+
+# Auto-allow trusted directories
+# Add full paths to directories you trust
+TRUSTED_DIRS=(
+    "/home/sethlabadie"
+    "/home/sethlabadie/Dev"
+)
+
+# Function to check if a directory is trusted
+is_trusted_dir() {
+    local dir="$1"
+    for trusted_dir in "${TRUSTED_DIRS[@]}"; do
+        if [[ "$dir" == "$trusted_dir"* ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Hook to automatically allow trusted directories
+auto_direnv_allow() {
+    local current_dir="$PWD"
+    if is_trusted_dir "$current_dir"; then
+        direnv allow
+    fi
+}
+
+
+# Prevent direnv from loading if not in a specific project # throws an error when opening a new terminal
+# if [[ -z "$PROJECT_ROOT" ]]; then
+#     exit 0
+# fi
+
+
+
+
+# Python virtual environment layout
+layout_python() {
+    local python=${1:-python3}
+    [[ $# -gt 0 ]] && shift
+    unset PYTHONHOME
+    if [[ -n "${VIRTUAL_ENV:-}" ]]; then
+        VIRTUAL_ENV=$(expand_path "${VIRTUAL_ENV}")
+    else
+        local python_version
+        python_version=$("$python" -c "import platform; print(platform.python_version())")
+        if [[ -z $python_version ]]; then
+            log_error "Could not detect Python version"
+            return 1
+        fi
+        VIRTUAL_ENV=$PWD/.venv
+    fi
+    if [[ ! -d $VIRTUAL_ENV ]]; then
+        log_status "Creating virtual environment in $VIRTUAL_ENV"
+        "$python" -m venv "$VIRTUAL_ENV"
+    fi
+    PATH_add "$VIRTUAL_ENV/bin"
+}
+
+
+# layout_uv() {
+#     if [[ -d ".venv" ]]; then
+#         VIRTUAL_ENV="$(pwd)/.venv"
+#     fi
+
+#     if [[ -z "${VIRTUAL_ENV:-}" || ! -d ${VIRTUAL_ENV:-} ]]; then
+#         log_status "No uv project exists. Executing \`uv init\` to create one."
+#         uv init
+#         uv venv
+#         VIRTUAL_ENV="$(pwd)/.venv"
+#     fi
+
+#     PATH_add "$VIRTUAL_ENV/bin"
+#     export UV_ACTIVE=1  # or VENV_ACTIVE=1
+#     export VIRTUAL_ENV
+# }
+
+# Previous version did uv init; this version does uv venv. Init creates a whole project scaffold; venv just creates a virtual environment.
+layout_uv() {
+    if [[ -d ".venv" ]]; then
+        VIRTUAL_ENV="$(pwd)/.venv"
+    fi
+
+    if [[ -z "${VIRTUAL_ENV:-}" || ! -d ${VIRTUAL_ENV:-} ]]; then
+        log_status "No virtual environment exists. Executing \`uv venv\` to create one."
+        uv venv
+#        VIRTUAL_ENV="$(pwd)/.venv"
+        VIRTUAL_ENV=$PWD/.venv
+    fi
+
+    PATH_add "$VIRTUAL_ENV/bin"
+    export UV_ACTIVE=1  # or VENV_ACTIVE=1
+    export VIRTUAL_ENV
+}
+

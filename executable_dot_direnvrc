@@ -1,0 +1,2 @@
+source "$HOME/.config/direnv/direnvrc"
+auto_direnv_allow

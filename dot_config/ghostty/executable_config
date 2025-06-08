@@ -1,0 +1,82 @@
+# This is the configuration file for Ghostty.
+#
+# This template file has been automatically created at the following
+# path since Ghostty couldn't find any existing config files on your system:
+#
+#   /home/sethlabadie/.config/ghostty/config
+#
+# The template does not set any default options, since Ghostty ships
+# with sensible defaults for all options. Users should only need to set
+# options that they want to change from the default.
+#
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+#
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config.
+
+# Config syntax crash course
+# ==========================
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# font-family = Iosevka
+# window-padding-x = 2
+#
+# # Spacing around the equals sign does not matter.
+# # All of these are identical:
+# key=value
+# key= value
+# key =value
+# key = value
+#
+# # Any line beginning with a # is a comment. It's not possible to put
+# # a comment after a config option, since it would be interpreted as a
+# # part of the value. For example, this will have a value of "#123abc":
+# background = #123abc
+#
+# # Empty values are used to reset config keys to default.
+# key =
+#
+# # Some config options have unique syntaxes for their value,
+# # which is explained in the docs for that config option.
+# # Just for example:
+# resize-overlay-duration = 4s 200ms
+
+
+# 0x96f, Aardvark Blue, Adwaita Dark, Apple System Colors, ayu, Ayu Mirage, Breeze, catppuccine-mocha, GitHub-Dark-Default
+theme = GitHub-Dark-Default
+# selection-invert-fg-bg = true
+# background = #42567E
+# foreground = #383D46
+# selection-background = #FA470B
+# selection-foreground = #F50C0C
+# selection-background = 
+maximize = true
+quit-after-last-window-closed = true
+shell-integration = zsh
+shell-integration-features = cursor, sudo, title
+clipboard-read = allow
+clipboard-write = allow
+window-title-font-family=Monaspace Neon
+window-subtitle  = working-directory
+font-family=Monaspace Neon
+font-size=14
+font-feature= calt, liga, dlig
+window-save-state = always
+mouse-hide-while-typing = true
+cursor-style = bar
+cursor-click-to-move = true
+# macos-titlebar-style = native
+confirm-close-surface = false
+
+# Auto-update Ghostty when a new release is available. Won't work if Ghostty is downloaded with a package manager
+auto-update = download
+
+# keybind = ctrl+z=close_surface
+# keybind = ctrl+d=new_split:right
+# keybind = ctrl+v=new_split:down
+# keybind = ctrl+shift+.=reload_config
+
+# Global keybinds work system-wide as long as
+# Ghostty application is running
+# keybind = global:ctrl+`=toggle_quick_terminal

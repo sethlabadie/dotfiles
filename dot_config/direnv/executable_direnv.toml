@@ -1,0 +1,25 @@
+# https://man.archlinux.org/man/extra/direnv/direnv.toml.1.en
+
+[whitelist]
+# Subdirectories of this path will also be whitelisted
+paths = [
+    "/home/sethlabadie/", "/home/sethlabadie/Dev/"
+]
+# If 'paths' doesn't work, try 'prefix'
+prefix = [ "/home/sethlabadie/", "/home/sethlabadie/Dev/" ]
+
+# Subdirectories of this path will not be whitelisted
+# exact = ["/home/sethlabadie/Dev/anthropic-api-project"] 
+
+[global]
+
+# verbose = false # Not in the docs, doesn't seem to do anything. Added by Anthropic.
+# log_format = "silent" # Not in the docs, doesn't seem to do anything. Added by Anthropic.
+# bash_path = "/usr/bin/bash" # This allows one to hard-code the position of bash. It maybe be useful to set this to avoid having direnv to fail when PATH is being mutated.
+disable_stdin = true # If set to true, stdin is disabled (redirected to /dev/null) during the .envrc evaluation.
+load_dotenv = true # Also look for and load .env files on top of the .envrc files. If both .envrc and .env files exist, the .envrc will always be chosen first.
+strict_env = true # If set to true, the .envrc will be loaded with set -euo pipefail. This option will be the default in the future.
+# warn_timeout = "5s" # Specify how long to wait before warning the user that the command is taking too long to execute. Defaults to "5s".
+hide_env_diff = true # If set to true, the diff of the environment variables will not be shown.
+log_format = "-" # Sets the log format for direnv outputs. Set to "-" to disable normal logging. direnv >= 2.36.0 is required.
+log_filter="^$" # This is a regex that will be used to filter out some of the logs. direnv >= 2.36.0 is required.

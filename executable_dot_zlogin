@@ -1,0 +1,23 @@
+# Logging shell initialization sequence
+mkdir -p ~/.logs
+
+{
+    echo "=== Zsh Initialization Sequence ==="
+    echo "Timestamp: $(date)"
+    echo "File: .zlogin"
+    echo "Current PWD: $PWD"
+    echo "Shell: $SHELL"
+} >> ~/.logs/zsh_init_sequence.log
+
+# Attempt to restore last working directory
+if [[ -f ~/.last_working_dir ]]; then
+    saved_dir=$(cat ~/.last_working_dir)
+    if [[ -d "$saved_dir" ]]; then
+        {
+            echo "Attempting to restore directory from .zlogin:"
+            echo "Saved directory: $saved_dir"
+            echo "Current PWD: $PWD"
+        } >> ~/.logs/zsh_init_sequence.log
+        cd "$saved_dir"
+    fi
+fi

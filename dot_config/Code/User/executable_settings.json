@@ -1,0 +1,16 @@
+{
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.profiles.linux": {
+        "zsh": {
+            "path": "/usr/bin/zsh",
+            "args": [
+                "-c",
+                "mkdir -p ~/.logs && { echo 'VS Code Terminal Launch:'; echo 'Last Working Dir: '$(cat ~/.last_working_dir 2>/dev/null); echo 'Current PWD: '$(pwd); } >> ~/.logs/vscode_terminal_debug.log && cd $(cat ~/.last_working_dir 2>/dev/null || echo ~) && zsh"
+            ]
+        }
+    },
+    "terminal.integrated.defaultLocation": "workspace",
+    "terminal.integrated.env.linux": {
+        "ZDOTDIR": "~"
+    }
+}
